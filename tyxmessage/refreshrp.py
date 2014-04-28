@@ -46,7 +46,7 @@ def getMessage():
             print message[0].text
             time = messages[0].findAll('span', {'class': 'pulish-time'})
             print time[0].text
-            
+
             file = open("../paocaomessage", "w")
             file.write(message[0].text)
             file.close()
@@ -67,8 +67,13 @@ def getMessageNew():
     messages = soup.findAll('div', {'class': 'page-status'})
     message = messages[0].findAll('span', {'class': 'status-content'})
     finalMessage = message[0].text
+
+    link = re.compile("\(.*?\)")
+    info = re.sub(link, '', finalMessage)
+    info = info.replace("&amp", "")
+    print info
     file = open("../paocaomessage", "w")
-    file.write(finalMessage)
+    file.write(info)
     file.close()
 
 if __name__ == '__main__':
